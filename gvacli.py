@@ -18,6 +18,7 @@ KEY_FLIGHTID = "sFlightIdentity"
 KEY_DESTINATION = "sAirport"
 KEY_DESTINATION_CODE = "sAirportCodeDestination"
 KEY_AIRCRAFT = "sAircraft"
+KEY_REGISTRATION = 'sAircraftRegistration'
 KEY_STATUS = "sFlightStatus"
 KEY_AIRLINE = "sCompany"
 KEY_SCHED_DEP = "dScheduledDeparture"
@@ -32,6 +33,7 @@ DISPLAYED_KEYS = [
   KEY_AIRLINE,
   KEY_GATE,
   KEY_AIRCRAFT,
+  KEY_REGISTRATION,
   KEY_STATUS]
 
 def fetch_departures(data):
@@ -95,7 +97,7 @@ def main():
   table = PrettyTable(['Scheduled',
     'Expected', 'Destination',
     'Flight', 'Airline', 'Gate',
-    'Aircraft', 'Status'])
+    'Aircraft', 'Reg', 'Status'])
   table.align = 'l'
   for departure in sorted(departures):
     table.add_row(departure)
