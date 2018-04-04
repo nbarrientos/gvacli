@@ -2,8 +2,10 @@
 import sys
 from datetime import datetime, timedelta
 import argparse
-import httplib
-import urllib
+from future.standard_library import install_aliases
+install_aliases()
+import http.client
+import urllib.parse
 import logging
 import anyjson
 import cgi
@@ -77,18 +79,18 @@ def main():
   if not args.all:
     now = datetime.now()
     last_sync = (now - timedelta(hours=3)).strftime("%Y-%m-%d %H:%M:%S")
-    last_sync = urllib.quote_plus(last_sync)
+    last_sync = urllib.parse.quote_plus(last_sync)
 
-  connection = httplib.HTTPConnection(WSHOST, 80)
+  connection = http.client.HTTPConnection(WSHOST, 80)
   uri = WSURI % last_sync
   connection.request("GET", uri)
   response = connection.getresponse()
 
-  if response.status != httplib.OK:
+  if response.status != http.client.OK:
     logging.error("The webservice didn't return OK :(")
     return 1
 
-  json = response.read()
+  json = response.read().decode("utf-8")
   data = anyjson.deserialize(json)
   departures = fetch_departures(data)
 
@@ -101,7 +103,7 @@ def main():
   table.align = 'l'
   for departure in sorted(departures):
     table.add_row(departure)
-  print table
+  print(table)
 
   return 0
 
