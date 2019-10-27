@@ -1,3 +1,5 @@
+**This project is no longer maintained**. It has been replaced by [go-gvacli](https://github.com/herver/go-gvacli).
+
 # gvacli
 CLI for the Geneva Airport departures/arrivals API
 
